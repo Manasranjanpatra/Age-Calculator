@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Age calculator</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        /* border: 2px solid black; */
+        box-shadow: 5px 5px 6px rgba(0,0,0,0.4),-5px -5px 6px rgba(0,0,0,0.4);
+
+        height: fit-content;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+      }
+      .show {
+        display: none;
+      }
+      h1 {
+        text-align: center;
+        color: hwb(0 0% 0%);
+      }
+
+      .testy {
+        position: fixed;
+        top: 3.6rem;
+        right: 4.5rem;
+        background-color: rgb(15, 16, 15);
+        color: #f5efef;
+        padding: 12px 19px;
+        border-radius: 5px;
+        font-weight: 900;
+        border-bottom: 0;
+        border-color: red;
+        font-size: 1.3rem;
+        z-index: 1000;
+        font-family: "urbanist";
+        animation: toastAnimation 4s linear;
+        -webkit-animation: toastAnimation 4s linear;
+        margin: 0 1rem;
+        border: 0.1px solid white;
+      }
+
+      @keyframes toastAnimation {
+        0% {
+          transform: translateX(100%);
+          opacity: 0;
+          -webkit-transform: translateX(100%);
+          -moz-transform: translateX(100%);
+          -ms-transform: translateX(100%);
+          -o-transform: translateX(100%);
+        }
+        20% {
+          transform: translateX(0);
+          opacity: 1;
+          -webkit-transform: translateX(0);
+          -moz-transform: translateX(0);
+          -ms-transform: translateX(0);
+          -o-transform: translateX(0);
+        }
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+          -webkit-transform: translateX(0);
+          -moz-transform: translateX(0);
+          -ms-transform: translateX(0);
+          -o-transform: translateX(0);
+        }
+      }
+      @keyframes showtoast {
+        0% {
+          transform: translateX(100%);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      button{
+        
+        padding: 4px 11px;
+        font-size: 1.4rem;
+        
+        background-color: rgb(0, 157, 255);
+        cursor: pointer;
+        border-radius: 5px ;
+      }
+      button:hover {
+        box-shadow: 0 0 5px rgb(0, 157, 255), 0 0 10px rgb(0, 157, 255),
+          0 0 15px rgb(0, 157, 255);
+      }
+      input{
+        font-size: 1.4rem;
+        padding: 2px 4px;
+      }
+      label{
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+      }
+
+      
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Age Calculator</h1>
+
+      <label for="input">Enter Birth Date</label>
+      <input type="date" name="" id="input" title="Age" />
+      <button class="fill">Submit</button>
+
+      <h2 id="show"></h2>
+    </div>
+    <script>
+      let inputvalue = document.querySelector("#input");
+      let buttons = document.querySelector("button");
+
+      inputvalue.addEventListener("change", (e) => {
+        let actualvaljue = e.target.value;
+
+
+
+
+
+        buttons.addEventListener("click", () => {
+
+
+          if(!actualvaljue){
+            alert("Enter Your Birthdate");
+            console.log("jnjnjn")
+          }
+          let Dob = `"${actualvaljue}"`;
+          console.log(actualvaljue);
+
+          let Dobform = new Date(Dob);
+          let Today = new Date();
+          let birthY = Dobform.getFullYear();
+
+          let TodayY = Today.getFullYear();
+          let birthM = Dobform.getMonth();
+          let TodayM = Today.getMonth();
+          let birthD = Dobform.getDate();
+          let TodayD = Today.getDate();
+          if (!birthD && !birthM && !birthY) {
+            alert("Enter date correctly");
+          }
+          let age = Math.abs(TodayY - birthY);
+          let Mdf = birthM - TodayM;
+          console.log(Mdf);
+          console.log(TodayD);
+          console.log(birthD);
+          console.log(age);
+
+          if (age > 0 && Mdf >= 0 && TodayD >= birthD + 1) {
+            console.log(age);
+            console.log("same");
+          } else {
+            console.log(age - 1);
+            console.log("decrese");
+          }
+
+          let showage = document.querySelector("#show");
+
+          showage.style.display = "block";
+          showage.innerHTML = ` Your age is ${age}`;
+
+          let toast = document.createElement("div");
+          toast.classList.add("testy");
+
+          if (age < 10) {
+            toast.innerHTML = `🥰 You are a child`;
+          }
+          if (age > 10 && age < 22) {
+            toast.innerHTML = ` 😍  You are a teenager`;
+          }
+          if (age < 10) {
+            toast.innerHTML = ` 😊 You are an adult`;
+          }
+
+          document.body.appendChild(toast);
+          setTimeout(() => {
+            toast.remove();
+          }, 2000);
+        });
+      });
+    </script>
+  </body>
+</html>
